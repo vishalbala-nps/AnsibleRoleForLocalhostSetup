@@ -1,0 +1,6 @@
+- hosts: ubuntu
+  remote_user: vishal
+  become: yes
+  become_user: root
+  roles:
+    - localhost_setup

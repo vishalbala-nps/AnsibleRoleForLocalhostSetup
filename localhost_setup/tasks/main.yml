@@ -1,0 +1,91 @@
+---
+# tasks file for AnsibleRoleForLocalhostSetup
+    - name: Upgrade the OS
+      apt:
+        name: "*"
+        state: latest
+
+
+    - name: Remove Unnecesary Software
+      apt:
+        pkg:
+          - gnome-mahjongg
+          - gnome-mines
+          - gnome-sudoku
+          - gnome-boxes
+          - virt-manager
+        state: absent
+
+    - name: Install apt software
+      apt:
+        pkg:
+          - git
+          - nautilus
+          - gnome-terminal
+          - net-tools
+          - curl
+          - wget
+          - snapd
+          - python3
+          - python3-pip
+          - openssh-server
+          - nano
+          - vim
+
+    - name: Install VirtualBox
+      apt:
+        deb: https://download.virtualbox.org/virtualbox/6.1.0/virtualbox-6.1_6.1.0-135406~Ubuntu~bionic_amd64.deb
+
+    - name: Install Google Chrome
+      apt:
+        deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+    - name: Install Visual Studio code
+      apt_key:
+        url: 'https://packages.microsoft.com/keys/microsoft.asc'
+        state: present
+      notify: "install vscode"
+
+
+    - name: Configure SSH Private Key
+      copy:
+        src: id_rsa
+        dest: ~/.ssh
+      become: false
+
+    - name: Configure SSH Public Key
+      copy:
+        src: id_rsa.pub
+        dest: ~/.ssh
+      become: false
+
+    - name: Download Vundle
+      git:
+        repo: "https://github.com/VundleVim/Vundle.vim.git"
+        dest: ~/.vim/bundle/Vundle.vim
+        clone: yes
+      become: false
+
+    - name: Configure Vundle
+      copy:
+        src: vimrc
+        dest: ~/.vimrc
+      become: false
+
+    - name: Enable multiverse repository
+      apt_repository:
+        repo: "{{ item }}"
+      loop:
+        - "deb http://archive.ubuntu.com/ubuntu/ bionic multiverse"
+        - "deb http://archive.ubuntu.com/ubuntu/ bionic-updates multiverse"
+        - "deb http://security.ubuntu.com/ubuntu/ bionic-security multiverse"
+
+    - name: Enable openssh-server
+      service:
+        name: ssh
+        enabled: yes
+
+    - name: Start openssh-server
+      service:
+        name: ssh
+        state: started
