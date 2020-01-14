@@ -28,9 +28,10 @@
           - snapd
           - python3
           - python3-pip
-          - openssh-server
+          - python3-tk
           - nano
           - vim
+          - apache2
 
     - name: Install VirtualBox
       apt:
@@ -45,7 +46,6 @@
         url: 'https://packages.microsoft.com/keys/microsoft.asc'
         state: present
       notify: "install vscode"
-
 
     - name: Configure SSH Private Key
       copy:
@@ -80,12 +80,7 @@
         - "deb http://archive.ubuntu.com/ubuntu/ bionic-updates multiverse"
         - "deb http://security.ubuntu.com/ubuntu/ bionic-security multiverse"
 
-    - name: Enable openssh-server
+    - name: Enable Apache2
       service:
-        name: ssh
+        name: apache2
         enabled: yes
-
-    - name: Start openssh-server
-      service:
-        name: ssh
-        state: started

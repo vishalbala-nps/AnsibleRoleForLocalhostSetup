@@ -10,6 +10,5 @@
   - name: Install Visual Studio Code
     apt:
       name: code
-      state: present
     listen: "install vscode"
 
