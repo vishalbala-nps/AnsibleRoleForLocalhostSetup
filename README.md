@@ -36,3 +36,5 @@ The following configs will also be done:
  - Ubuntu's multiverse repos
  - Install Vundle and configure .vimrc accordingly
  - SSH keys are copied to ~/.ssh (temp keys are in the files dir)
+
+Asciinema Recording is at: https://asciinema.org/a/293600
