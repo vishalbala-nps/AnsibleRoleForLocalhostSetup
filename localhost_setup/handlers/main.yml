@@ -1,14 +1,4 @@
 ---
 # handlers file for AnsibleRoleForLocalhostSetup
-  - name: Enable Visual Studio Code repo
-    apt_repository:
-      repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
-      filename: vscode
-      state: present
-    listen: "install vscode"
 
-  - name: Install Visual Studio Code
-    apt:
-      name: code
-    listen: "install vscode"
 

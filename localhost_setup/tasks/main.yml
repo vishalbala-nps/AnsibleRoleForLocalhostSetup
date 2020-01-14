@@ -41,11 +41,20 @@
       apt:
         deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
-    - name: Install Visual Studio code
+    - name: Import Visual Studio Code apt key
       apt_key:
         url: 'https://packages.microsoft.com/keys/microsoft.asc'
         state: present
-      notify: "install vscode"
+   
+    - name: Enable Visual Studio Code repo
+      apt_repository:
+        repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
+        filename: vscode
+        state: present
+
+    - name: Install Visual Studio Code
+      apt:
+        name: code
 
     - name: Configure SSH Private Key
       copy:
